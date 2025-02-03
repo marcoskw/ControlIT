@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+
+<div class="container my-4">
+    <h2>Ocorrência - Atualizar nome de uma Máquina</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <section class="alert {{ message.tags }}">
+                {{ message }}
+            </section>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{% url 'atualizar_nome_maquina' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="mb-4">
+                    <label for="computador">Selecione o Computador:</label><br>
+                    <small>ID - Nome Rede - Setor - Operador - Marca - Modelo - Serial Number</small>
+                    <select name="computador" id="computador" class="form-control" required>
+                        {% for computador in computadores %}
+                            <option value="{{ computador.id }}">
+                                {{ computador.id }} - {{ computador.nome_rede }} - {{ computador.setor }} - {{ computador.operador }} - {{ computador.marca }} - {{ computador.modelo }} - {{ computador.serial_number }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="novo_nome_rede">Digite o novo nome do Equipamento:</label>
+                    <input type="text" id="novo_nome_rede" name="novo_nome_rede" placeholder="Digite o nome" class="form-control" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="observacoes">Observações:</label>
+                    <textarea class="form-control" name="observacoes" id="observacoes" rows="3" placeholder="Digite suas observações..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-lg btn-indigo">Aplicar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock 'body' %}

@@ -1,0 +1,77 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'controlit-cubo.png' %}" height="50px"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <!-- MENU PRINCIPAL -->
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <!-- MENU SOBRE -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Arquivo
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+          <a class="dropdown-item" href="{% url 'cadastrar_usuario' %}">Cadastrar Usuário</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'parametros' %}">Parâmetros</a>          
+          <div class="dropdown-divider"></div>          
+          <a class="dropdown-item" href="{% url 'sobre' %}">Sobre</a>
+        </div>
+      </li>
+      <!-- MENU EMPRESA -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Empresa
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+          <a class="dropdown-item" href="{% url 'listar_empresas' %}">Empresa</a>
+          <a class="dropdown-item" href="{% url 'listar_setores' %}">Setor</a>       
+          <a class="dropdown-item" href="{% url "listar_operadores" %}">Operadores</a>
+      </li>
+      <!-- MENU CONTATOS -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url "listar_contatos" %}">Contatos Externos</a>
+      </li>      
+      <!-- MENU EQUIPAMENTOS -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'listar_computadores' %}">Computadores</a>
+      </li>          
+      <!-- MENU EQUIPAMENTOS -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Cadastros de Equipamentos
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
+          <a class="dropdown-item" href="{% url 'listar_marcas' %}">Marca</a>
+          <a class="dropdown-item" href="{% url 'listar_softwares' %}">Software</a>
+          <a class="dropdown-item" href="{% url 'listar_sistemas_operacionais' %}">Sistema Operacional</a>
+        </div>
+      </li>
+      <!-- MENU OCORRÊNCIAS -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ocorrências
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
+          <a class="dropdown-item" href="{% url 'ocorrencias_operadores' %}">Operadores</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'ocorrencias_equipamentos' %}">Equipamentos</a>
+        </div>
+      </li>
+      <!-- MENU WIKI -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url "wiki_lista" %}">Wiki</a>
+      </li>         
+    </ul>
+    <!-- FORMULÁRIO DE LOGOUT -->
+    <form class="form-inline ml-auto" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button class="btn btn-danger my-2 my-sm-0" type="submit">Sair</button>
+    </form>
+  </div>
+</nav>

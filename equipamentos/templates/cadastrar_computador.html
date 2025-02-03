@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+
+<div class="container my-5">
+    <h2 class="mb-4">Cadastro de Computador</h2>
+    <h3 class="mb-2 h4">Etiqueta: {{ proximo_computador }}</h3>
+    
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form action="{% url 'cadastrar_computador' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="setor">Selecione o Setor:</label>
+                <select id="setor" name="setor" class="form-control">
+                    {% for setor in setores %}
+                        <option value="{{ setor.id }}">{{ setor.nome_setor }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="nome_rede">Nome na Rede:</label>
+                <input type="text" id="nome_rede" name="nome_rede" class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="status">Status:</label>
+                <select id="status" name="status" class="form-control" disabled="true">
+                    {% for i in status %}
+                        <option value="{{ i.0 }}">{{ i.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="operador">Operador:</label>
+                <select id="operador" name="operador" class="form-control">
+                    {% for operador in operadores %}
+                        <option value="{{ operador.id }}">{{ operador.nome_operador }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="tipo_equipamento">Tipo Equipamento:</label>
+                <select id="tipo_equipamento" name="tipo_equipamento" class="form-control">
+                    {% for tipo_equipamento in tipo_equipamentos %}
+                        <option value="{{ tipo_equipamento.id }}">{{ tipo_equipamento.nome_tipo_equipamento }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="marca">Marca:</label>
+                <select id="marca" name="marca" class="form-control">
+                    {% for marca in marcas %}
+                        <option value="{{ marca.id }}">{{ marca.nome_marca }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" name="modelo" placeholder="Digite o modelo..." class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="serial_number">Serial Number:</label>
+                <input type="text" id="serial_number" name="serial_number" placeholder="Digite o serial number..." class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="processador">Processador:</label>
+                <input type="text" id="processador" name="processador" placeholder="Digite o processador..." class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="memoria">Memória:</label>
+                <input type="text" id="memoria" name="memoria" placeholder="Digite a memória..." class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="armazenamento">Armazenamento:</label>
+                <input type="text" id="armazenamento" name="armazenamento" placeholder="Digite o armazenamento..." class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="tipo_armazenamento">Tipo Armazenamento:</label>
+                <select id="tipo_armazenamento" name="tipo_armazenamento" class="form-control">
+                    {% for i in tipo_armazenamentos %}
+                        <option value="{{ i.0 }}">{{ i.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="sistema_operacional">Sistema Operacional:</label>
+                <select id="sistema_operacional" name="sistema_operacional" class="form-control">
+                    {% for so in sistemas_operacionais %}
+                        <option value="{{ so.id }}">{{ so.nome_sistema_operacional }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="so_serial_vbs">Sistema Operacional - Arquivo VBS:</label>
+                <input type="text" id="so_serial_vbs" name="so_serial_vbs" placeholder="Digite o serial..." class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="so_serial_cmd">Sistema Operacional - CMD:</label>
+                <div class="input-group">
+                    <input type="text" id="so_serial_cmd" name="so_serial_cmd" placeholder="Digite o serial..." class="form-control">
+                    <button class="btn btn-secondary" type="button" onclick="copyCommand()">Copiar Comando</button>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numero_nota_fiscal_computador">Número Nota Fiscal Computador:</label>
+                <input type="text" id="numero_nota_fiscal_computador" name="numero_nota_fiscal_computador" placeholder="Digite o número da Nota..." class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="nf_computador">Nota Fiscal Computador:</label>
+                <input type="file" id="nf_computador" name="nf_computador" class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numero_nota_fiscal_sistema_operacional">Número Nota Fiscal Sistema Operacional:</label>
+                <input type="text" id="numero_nota_fiscal_sistema_operacional" name="numero_nota_fiscal_sistema_operacional" placeholder="Digite o número da Nota..." class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="nf_sistema_operacional">Nota Fiscal Sistema Operacional:</label>
+                <input type="file" id="nf_sistema_operacional" name="nf_sistema_operacional" class="form-control">
+            </div>
+        </div>
+
+        <div class="row">
+            {% for field in fields %}
+                <div class="col-md-6 mb-3">
+                    <label for="{{ field.id }}">{{ field.label }}:</label>
+                    {% if field.type == 'select' %}
+                        <select id="{{ field.id }}" name="{{ field.name }}" class="form-control">
+                            {% for option in field.options %}
+                                <option value="{{ option.id }}">{{ option.name }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <input type="{{ field.type }}" id="{{ field.id }}" name="{{ field.name }}" 
+                            placeholder="{{ field.placeholder }}" class="form-control">
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <div class="col-12 mb-3">
+                <label for="softwares">Softwares:</label>
+                <div class="table-responsive">
+                    <table class="table" id="softwares-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Serial</th>
+                                <th scope="col">Número Nota Fiscal</th>
+                                <th scope="col">Nota Fiscal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select id="software" name="software" class="form-control">
+                                        {% for software in softwares %}
+                                            <option value="{{ software.id }}">{{ software.nome_software }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="serial_software" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" class="form-control">
+                                </td>
+                                <td>
+                                    <input type="text" name="numero_nota_software" placeholder="Digite o número da Nota Fiscal do Software" class="form-control">
+                                </td>                                
+                                <td>
+                                    <input type="file" name="nf_software" class="form-control">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <label for="observacoes">Observações:</label>
+                <textarea id="observacoes" class="form-control" name="observacoes" rows="3"></textarea>
+            </div>
+
+            <div class="col-12">
+                <input type="submit" class="btn btn-lg btn-indigo" value="Cadastrar">
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+function copyCommand() {
+    // O comando que queremos copiar
+    const command = 'wmic path softwarelicensingservice get OA3xOriginalProductKey';
+
+    // Cria um elemento textarea temporário para copiar o comando
+    const tempTextArea = document.createElement('textarea');
+    tempTextArea.value = command;
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
+    tempTextArea.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+    try {
+        // Copia o comando para a área de transferência
+        navigator.clipboard.writeText(tempTextArea.value)
+            .then(() => {
+                alert('Comando copiado para a área de transferência!');
+            })
+            .catch(err => {
+                console.error('Erro ao copiar comando: ', err);
+            });
+    } catch (err) {
+        console.error('Erro ao copiar comando: ', err);
+    } finally {
+        // Remove o elemento textarea temporário
+        document.body.removeChild(tempTextArea);
+    }
+}
+</script>
+{% endblock 'body' %}

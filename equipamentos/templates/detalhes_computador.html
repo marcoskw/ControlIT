@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+    <title>Detalhes do Computador</title>
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+
+<div class="container my-5">
+    <h2 class="mb-4">Detalhes do Computador - ID: {{ computador.id }}</h2>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <h5>Data Cadastro:</h5>
+            <p>{{ computador.data_cadastro }}</p>
+        </div>  
+
+        <div class="col-md-6 mb-3">
+            <h5>Última Verificação:</h5>
+            <p>{{ computador.data_ultima_atualizacao }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Setor:</h5>
+            <p>{{ computador.setor.nome_setor }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Nome na Rede:</h5>
+            <p>{{ computador.nome_rede }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Status:</h5>
+            <p>{{ computador.get_status_display }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Operador:</h5>
+            <p>{{ computador.operador.nome_operador }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Tipo Equipamento:</h5>
+            <p>{{ computador.tipo_equipamento.nome_tipo_equipamento }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Marca:</h5>
+            <p>{{ computador.marca.nome_marca }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Modelo:</h5>
+            <p>{{ computador.modelo }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Serial Number:</h5>
+            <p>{{ computador.serial_number }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Processador:</h5>
+            <p>{{ computador.processador }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Memória:</h5>
+            <p>{{ computador.memoria }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Armazenamento:</h5>
+            <p>{{ computador.armazenamento }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Tipo Armazenamento:</h5>
+            <p>{{ computador.get_tipo_armazenamento_display }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Sistema Operacional:</h5>
+            <p>{{ computador.sistema_operacional.nome_sistema_operacional }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Sistema Operacional - Arquivo VBS:</h5>
+            <p>{{ computador.so_serial_vbs }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h5>Sistema Operacional - CMD:</h5>
+            <p>{{ computador.so_serial_cmd }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+        </div>
+
+        {% if computador.numero_nota_fiscal_computador %}
+            <div class="col-md-6 mb-3">
+                <h5>Número da Nota Fiscal do Computador:</h5>
+                <p>{{ computador.numero_nota_fiscal_computador }}</p>
+            </div>
+        {% endif %}
+
+        {% if computador.nf_computador %}
+            <div class="col-md-6 mb-3">
+                <h5>Nota Fiscal Computador:</h5>
+                <a href="{{ computador.nf_computador.url }}" target="_blank">Baixar Nota Fiscal Computador</a>
+            </div>
+        {% endif %}
+
+        {% if computador.numero_nota_fiscal_sistem_operacional %}
+            <div class="col-md-6 mb-3">
+                <h5>Número da Nota Fiscal do Sistema Operacional:</h5>
+                <p>{{ computador.numero_nota_fiscal_sistem_operacional }}</p>
+            </div>
+        {% endif %}
+
+        {% if computador.nf_sistema_operacional %}
+            <div class="col-md-6 mb-3">
+                <h5>Nota Fiscal Sistema Operacional:</h5>
+                <a href="{{ computador.nf_sistema_operacional.url }}" target="_blank">Baixar Nota Fiscal Sistema Operacional</a>
+            </div>
+        {% endif %}
+
+        <div class="col-12 mb-3">
+            <h4>Softwares Instalados</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Software</th>
+                        <th>Serial</th>
+                        <th>Nota Fiscal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for software_computador in softwares_computador %}
+                        <tr>
+                            <td>{{ software_computador.software.nome_software }}</td>
+                            <td>{{ software_computador.serial }}</td>
+                            <td>{{ software_computador.numero_nota_software }}</td>
+                            <td>
+                                {% if software_computador.nf_software %}
+                                    <a target="_blank" href="{{ software_computador.nf_software.url }}">Baixar Nota Fiscal</a>
+                                {% else %}
+                                    Não disponível
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3">Nenhum software associado encontrado para este computador.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-12 mb-3">
+            <h5>Observações:</h5>
+            <p>{{ computador.observacoes }}</p>
+        </div>
+    </div>
+
+    <a href="{% url 'listar_computadores' %}" class="btn btn-secondary">Voltar</a>
+</div>
+
+{% endblock 'body' %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+
+    {% include "partials/barra_navegacao.html" %}
+
+    <div class="container">
+        <br>
+        <br>
+        <p class="h2">Ocorrência - Inativar Computador</p>
+        {% if messages %}
+            {% for message in messages %}
+                <section class="alert {{message.tags}}">
+                    {{message}}
+                </section>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="col-md">
+                <form action="{% url 'inativar_computador' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <br>
+                <label>Selecione o Computador:</label>
+                <br>
+                <select name="computador" class="form-control">
+                    {% for computador in computadores %}
+                        <option value="{{ computador.id }}">{{computador.id }} - {{ computador.nome_rede }} - {{ computador.setor }}  - {{ computador.operador }} - {{ computador.marca }}- {{ computador.modelo }} - {{ computador.serial_number }}</option>
+                    {% endfor %}
+                </select>
+                <br>         
+                <label>Observações:</label>
+                <textarea class="form-control" name="observacoes" rows="3"></textarea>                
+                <br>    
+                <input type="submit" class="btn btn-lg btn-indigo" value="Aplicar">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock 'body' %}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+{% block 'body' %}
+    {% include "partials/barra_navegacao.html" %}
+    <br>
+    <div class="container dark-color container_empresas">
+        <h3 class="h3">Bem Vindo {{ first_name }} {{ last_name }}!</h3>
+    </div> 
+    <div class="container mt-5">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Data e Hora Atuais</h5>
+                <p class="card-text">
+                    {{ current_time|date:"d/m/Y H:i:s" }}
+                </p>
+                <h6 class="card-title">Para melhor uso, utilize tudo em maiúsculo</h6>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Demandas Pendentes:</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item">Lista 1</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Próximos Computadores para Verificação:</h5>
+                        <ul class="list-group">
+                            {% now "Y-m-d" as hoje %}
+                            {% for computador in computadores_verificacao %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>ID Etiqueta:</strong> {{ computador.id }}<br>
+                                        <strong>Nome Rede:</strong> {{ computador.nome_rede }}<br>
+                                        <strong>Operador:</strong> {{ computador.operador }}<br>
+                                        <strong>Setor:</strong> {{ computador.setor }}<br>
+                                        <strong>Última Atualização:</strong> {{ computador.data_ultima_atualizacao|date:"d/m/Y" }}<br>
+            
+                                        <strong>Data de Verificação:</strong> 
+                                        {% if computador.proxima_verificacao|date:"Y-m-d" < hoje %}
+                                            <span style="color: red; font-weight: bold;">
+                                                {{ computador.proxima_verificacao|date:"d/m/Y" }}
+                                            </span>
+                                        {% elif computador.proxima_verificacao|date:"Y-m-d" == hoje %}
+                                            <span style="color: green; font-weight: bold;">
+                                                {{ computador.proxima_verificacao|date:"d/m/Y" }}
+                                            </span>
+                                        {% else %}
+                                            <span style="color: green; font-weight: bold;">
+                                                {{ computador.proxima_verificacao|date:"d/m/Y" }}
+                                            </span>
+                                        {% endif %}
+                                        <br>
+                                    </div>
+                                    <form action="{% url "inspecao_computador" computador.id %}" method="GET">
+                                        <button class="btn btn-info btn-sm">Fazer Verificação</button>
+                                    </form>
+
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>            
+            
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Outras Informações</h5>
+                <p class="card-text">Você pode adicionar outras informações ou funcionalidades úteis aqui.</p>
+            </div>
+        </div>
+    </div>    
+{% endblock 'body' %}

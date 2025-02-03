@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+
+<div class="container my-5">
+    <h2 class="mb-4 text-center">Cadastro de Contato</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="{% url 'cadastrar_contato' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="empresa">Selecione a Empresa:</label>
+                    <select id="empresa" name="empresa" class="form-control" required>
+                        <option value="">Selecione uma empresa</option>
+                        {% for empresa in empresas %}
+                            <option value="{{ empresa.id }}">{{ empresa.nome_empresa }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="setor">Selecione o Setor:</label>
+                    <select id="setor" name="setor" class="form-control" required>
+                        {% for setor in setores %}
+                            <option value="{{ setor.id }}">{{ setor.nome_setor }}</option>
+                        {% endfor %}                        
+                        <option value="">Selecione um setor</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="nome_contato" class="form-label">Nome do Contato:</label>
+                    <input type="text" id="nome_contato" name="nome_contato" class="form-control" placeholder="Digite o nome do colaborador..." required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail:</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Digite o e-mail...">
+                </div>
+
+                <div class="mb-3">
+                    <label for="telefone" class="form-label">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone" class="form-control" placeholder="Digite o telefone...">
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" class="form-control" disabled>
+                        {% for i in status %}
+                            <option value="{{ i.0 }}">{{ i.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="observacoes" class="form-label">Observações:</label>
+                    <textarea id="observacoes" class="form-control" name="observacoes" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#empresa').change(function(){
+            var empresaId = $(this).val();  // Pega o valor da empresa selecionada
+            if(empresaId){
+                $.ajax({
+                    url: "{% url 'filtrar_setores' %}",  // Gera a URL da view filtrar_setores
+                    data: {
+                        'empresa_id': empresaId  // Passa o ID da empresa como parâmetro
+                    },
+                    success: function(data){
+                        $('#setor').empty();  // Limpa o campo de setores
+                        $('#setor').append('<option value="">Selecione um setor</option>');  // Adiciona uma opção padrão
+                        $.each(data, function(index, setor){  // Percorre os setores retornados
+                            $('#setor').append('<option value="' + setor.id + '">' + setor.nome_setor + '</option>');  // Adiciona cada setor ao dropdown
+                        });
+                    }
+                });
+            } else {
+                $('#setor').empty();  // Limpa o campo de setores se nenhuma empresa estiver selecionada
+                $('#setor').append('<option value="">Selecione um setor</option>');  // Adiciona a opção padrão
+            }
+        });
+    });
+</script>
+{% endblock 'body' %}

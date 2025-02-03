@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+    
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Parâmetros</h1>
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} mb-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form action="{% url 'parametros' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Empresa Padrão</h5>
+                        <div class="form-group">
+                            <label for="empresa">Selecione a Empresa:</label>
+                            <select name="nome_exibicao" id="empresa" class="form-control" disabled>
+                                <option value="{{ empresa }}">{{ empresa }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Contagem de dias para inspeção de Computador</h5>
+                        <input type="number" value="{{ contagem_dias_inspecao_computador }}" class="form-control mb-3" name="contagem_dias_inspecao_computador" id="contagem_dias_inspecao_computador" placeholder="Digite o número de dias" />
+                        <button  class="btn btn-primary">Salvar</button>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </form>
+
+
+
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Últimas Notícias</h5>
+                    <p class="card-text">Aqui você pode adicionar informações sobre as últimas notícias ou atualizações do sistema. Mantenha os usuários informados sobre as novidades.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Próximos Computadores para Checagem</h5>
+                    <p class="card-text">Seção destinada para fazer a verificação de computadores. Adicione informações relevantes sobre as próximas checagens.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Outras Informações</h5>
+            <p class="card-text">Você pode adicionar outras informações ou funcionalidades úteis aqui. Este espaço é reservado para dados adicionais que podem ser de interesse dos usuários.</p>
+        </div>
+    </div>
+</div>{% endblock 'body' %}

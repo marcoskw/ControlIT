@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+<link rel="stylesheet" href="{% static 'empresarios/css/listar_empresas.css' %}">
+<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center">
+                <h2 class="mr-3">Ocorrências de Operadores</h2>
+            </div>
+            <form class="form-inline" method="GET" action="{% url 'buscar_ocorrencias_operadores' %}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar..." aria-label="Pesquisar" name="q" value="{{ request.GET.q }}">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+        </div>    
+
+        <table class="table table-striped">
+            <thead>
+                <tr class="cabecalho" style="background-color: transparent !important;">
+                    <th scope="col">Id</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Tipo Ocorrência</th>
+                    <th scope="col">Operador</th>
+                    <th scope="col">Observações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ocorrencia in ocorrencias %}
+                    <tr>
+                        <td>{{ ocorrencia.id }}</td>
+                        <td>{{ ocorrencia.data }}</td>
+                        <td>
+                            {% if ocorrencia.tipo_ocorrencia == '1' %}
+                                INATIVAR OPERADOR
+                            {% elif ocorrencia.tipo_ocorrencia == '2' %}
+                                TROCAR OPERADOR DE SETOR
+                            {% endif %}
+                        </td>
+                        <td>{{ ocorrencia.operador }}</td>
+                        <td>{{ ocorrencia.observacoes }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>{% endblock 'body' %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+    
+<div class="container-fluid my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center">
+            <h2 class="mr-3">Contatos</h2>
+            <a href="{% url 'cadastrar_contato' %}" class="btn btn-outline-success">Cadastrar</a>
+        </div>
+        <form class="form-inline" method="GET" action="{% url 'buscar_contatos' %}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar..." aria-label="Pesquisar" name="q" value="{{ request.GET.q }}">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover w-100">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome Contato</th>
+                    <th scope="col">Empresa</th>                    
+                    <th scope="col">Setor</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Telefone</th>                    
+                    <th scope="col">Status</th>
+                    <th scope="col">Ação</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for contato in contatos %}
+                    <tr>
+                        <td>{{ contato.id }}</td>
+                        <td>{{ contato.nome_contato }}</td>
+                        <td>{{ contato.empresa }}</td>
+                        <td>{{ contato.setor }}</td>
+                        <td><a href="mailto:{{ contato.email }}">{{ contato.email }}</a></td>
+                        <td>{{ contato.telefone }}</td>                        
+                        <td>{{ contato.status }}</td>
+                        <td>
+                            <a href="#" class="btn btn-outline-primary btn-sm">Editar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock 'body' %}

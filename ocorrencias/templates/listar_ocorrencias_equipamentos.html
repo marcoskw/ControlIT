@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+{% block 'body' %}
+  {% include "partials/barra_navegacao.html" %}
+
+  <!-- Container para centralizar o conteúdo -->
+  <div class="container mt-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+          <div class="d-flex align-items-center">
+              <h2 class="mr-3">Ocorrências de Equipamentos</h2>
+          </div>
+          <form class="form-inline" method="GET" action="{% url 'buscar_ocorrencias_equipamentos' %}">
+              <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar..." aria-label="Pesquisar" name="q" value="{{ request.GET.q }}">
+              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+          </form>
+      </div>    
+
+      <table class="table">
+        <thead>
+          <tr class="cabecalho" style="background-color: transparent !important;">
+            <th class="cabecalho" scope="col">Id</th>
+            <th class="cabecalho" scope="col">Data</th>                    
+            <th class="cabecalho" scope="col">Tipo Ocorrência</th>
+            <th class="cabecalho" scope="col">Computador</th>                                    
+            <th class="cabecalho" scope="col">Observações</th> 
+          </tr>
+        </thead>
+        <tbody>
+            {% for ocorrencia in ocorrencias %}
+                <tr class="linha">
+                    <td class="linha">{{ ocorrencia.id }}</td>
+                    <td class="linha">{{ ocorrencia.data }}</td>
+                    <td class="linha">
+                      {% if ocorrencia.tipo_ocorrencia == '1' %}
+                        INATIVAR COMPUTADOR
+                      {% elif ocorrencia.tipo_ocorrencia == '2' %}
+                        TROCAR OPERADOR DE COMPUTADOR
+                      {% elif ocorrencia.tipo_ocorrencia == '3' %}
+                        ADICIONAR NOVO SOFTWARE AO COMPUTADOR
+                      {% elif ocorrencia.tipo_ocorrencia == '4' %}
+                        ATUALIZAR NOME NO COMPUTADOR
+                      {% elif ocorrencia.tipo_ocorrencia == '5' %}
+                        ATUALIZAR HARDWARE                                                                                        
+                      {% endif %}
+                    </td>
+                    <td class="linha">{{ ocorrencia.computador }}</td>
+                    <td class="linha">{{ ocorrencia.observacoes }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+  </div>  <!-- Fim do container -->
+{% endblock 'body' %}

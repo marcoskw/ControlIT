@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+{% block 'body' %}
+    {% include "partials/barra_navegacao.html" %}
+    <br>
+    <br>
+    <div class="container dark-color container_empresas">
+        <h1 class="h1">Ocorrências de Equipamentos</h1>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url "inativar_computador" %}">1. Inativar Computador</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url "trocar_computador_operador" %}">2. Trocar Operador de um Computador</a>    
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a href="{% url "adicionar_software_em_um_computador" %}">3. Adicionar Novo Software em um Computador</a>    
+            </li>            
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a href="{% url "atualizar_nome_maquina" %}">4. Atualizar Nome do Computador</a>    
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a href="#"></a>    
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a href="{% url "listar_ocorrencias_equipamentos" %}">Listar Ocorrências de Equipamentos</a>    
+          </li>
+        </ul>
+    </div>
+{% endblock 'body' %}

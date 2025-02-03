@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+
+<div class="container my-5">
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}    
+    <h2 class="mb-4">Inspeção de Computador - <a href="{% url 'baixar_coletar_informacoes' 'ferramentas/bat/coletar_informacoes.bat' %}" download>Baixar Coletor de Informações</a>
+    </h2>
+
+    <form method="post" action="{% url "inspecao_computador" computador.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <div class="form-group">
+            <label for="data_inspecao">Data da Inspeção: {{ data_inspecao }} | Usuário: {{ user }}</label>
+        </div>
+
+        <div class="form-group">
+            <label for="computador">Computador</label>
+            <select class="form-control" id="computador" name="computador" disabled>
+                    <option value="{{ computador.id }}">{{ computador.nome_rede }} - {{ computador.operador }}</option>
+            </select>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="check_antivirus" name="check_antivirus">
+            <label class="form-check-label" for="check_antivirus">Antivírus Instalado</label>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="check_so" name="check_so">
+            <label class="form-check-label" for="check_so">Sistema Operacional Atualizado</label>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="check_softwares" name="check_softwares">
+            <label class="form-check-label" for="check_softwares">Softwares Necessários Instalados</label>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="uso_armazenamento" name="uso_armazenamento">
+            <label class="form-check-label" for="uso_armazenamento">Armazenamento em Uso Compativel (30% ou mais livre)</label>
+        </div>
+
+        <div class="form-group">
+            <label for="arquivo_computador">Arquivo do Computador</label>
+            <input type="file" class="form-control-file" id="arquivo_computador" name="arquivo_computador">
+        </div>
+
+        <div class="form-group">
+            <label for="observacoes">Observações</label>
+            <textarea class="form-control" id="observacoes" name="observacoes" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar Inspeção</button>
+    </form>
+</div>
+
+    
+{% endblock 'body' %}

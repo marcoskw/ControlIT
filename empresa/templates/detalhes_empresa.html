@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+    <title>Detalhes do Computador</title>
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+<div class="container my-4">
+    <h1 class="text-center mb-4">Detalhes da Empresa</h1>
+
+    <!-- Logo da Empresa -->
+    <div class="text-center mb-4 logo">
+        {% if empresa.logo %}
+            <img src="{{ empresa.logo.url }}" alt="Logo da Empresa">
+        {% else %}
+            <p class="text-muted">Logo não disponível</p>
+        {% endif %}
+    </div>
+
+    <!-- Informações da Empresa -->
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Informações Gerais</h5>
+                    <p><span class="field">Nome da Empresa:</span> <span>{{ empresa.nome_empresa }}</span></p>
+                    <p><span class="field">CNPJ:</span> <span>{{ empresa.cnpj }}</span></p>
+                    <p><span class="field">Telefone:</span> <span>{{ empresa.telefone }}</span></p>
+                    <p><span class="field">Email:</span> <span>{{ empresa.email }}</span></p>
+                    <p><span class="field">Site:</span> <span><a href="{{ empresa.site }}" target="_blank">{{ empresa.site }}</a></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Endereço</h5>
+                    <p><span class="field">Endereço:</span> <span>{{ empresa.endereco }}</span></p>
+                    <p><span class="field">Número:</span> <span>{{ empresa.numero }}</span></p>
+                    <p><span class="field">Complemento:</span> <span>{{ empresa.complemento }}</span></p>
+                    <p><span class="field">Bairro:</span> <span>{{ empresa.bairro }}</span></p>
+                    <p><span class="field">Cidade:</span> <span>{{ empresa.cidade }}</span></p>
+                    <p><span class="field">UF:</span> <span>{{ empresa.uf }}</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Observações</h5>
+                    <p><span class="field">Observações:</span> <span>{{ empresa.observacoes }}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-5sA4CpB2u+L1AoGZQJlTSVOaG6OhXw2DgjgQZ2cI0wnt6g8kFf6FsZ4XmM8Ecs8" crossorigin="anonymous"></script>
+{% endblock 'body' %}

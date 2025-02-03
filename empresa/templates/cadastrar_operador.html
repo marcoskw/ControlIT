@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+
+<div class="container my-5">
+    <h2 class="mb-4">Cadastro de Operador</h2>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <form action="{% url 'cadastrar_operador' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="empresa">Selecione a Empresa:</label>
+                    <select name="empresa" id="empresa" class="form-control">
+                        <option value="{{ empresa.id }}">{{ empresa }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="setor">Selecione o Setor:</label>
+                    <select id="setor" name="setor" class="form-control" required>
+                        {% for setor in setores %}
+                            <option value="{{ setor.id }}">{{ setor.nome_setor }}</option>
+                        {% endfor %}                        
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="nome_operador">Nome do Operador:</label>
+                    <input type="text" id="nome_operador" name="nome_operador" class="form-control" placeholder="Digite o nome do colaborador..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Digite o email..." required>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" class="form-control" disabled>
+                        {% for i in status %}
+                            <option value="{{ i.0 }}">{{ i.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-lg btn-primary">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock 'body' %}

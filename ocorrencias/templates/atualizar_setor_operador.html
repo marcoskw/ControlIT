@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+
+    {% include "partials/barra_navegacao.html" %}
+
+    <div class="container">
+        <br>
+        <br>
+        <p class="h2">Ocorrência - Atualizar Setor de Operador</p>
+        {% if messages %}
+            {% for message in messages %}
+                <section class="alert {{message.tags}}">
+                    {{message}}
+                </section>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="col-md">
+                <form action="{% url 'atualizar_setor_operador' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <br>
+                <label>Selecione o Operador:</label>
+                <br>
+                <select name="operador" class="form-control">
+                    {% for operador in operadores %}
+                        <option value="{{ operador.id }}">{{ operador.nome_operador }} - {{ operador.setor }}</option>
+                    {% endfor %}
+                </select>
+                <!--
+                <br>       
+                <label>Setor cadastrado no usuário:</label>
+                <br>
+                <select name="setor_cadastrado" class="form-control" disabled>
+                    {% for setor_c in setores %}
+                        <option value="{{ setor_c.id }}" >{{ setor_c.nome_setor }}</option>
+                    {% endfor %}
+                </select>-->
+                <br>     
+                <label>Novo Setor do Operador:</label>
+                <br>
+                <select name="setor_novo" class="form-control">
+                    {% for setor_n in setores %}
+                        <option value="{{ setor_n.id }}">{{ setor_n.nome_setor }}</option>
+                    {% endfor %}
+                </select>
+                <br>                       
+                <label>Observações:</label>
+                <textarea class="form-control" name="observacoes" rows="3"></textarea>                
+                <br>    
+                <input type="submit" class="btn btn-lg btn-indigo" value="Aplicar">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+{% endblock 'body' %}

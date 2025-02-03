@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+
+<div class="container my-5">
+    <h2 class="mb-4">Cadastro de Marca</h2>
+
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} mb-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="{% url 'cadastrar_marca' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="form-group mb-3">
+                    <label for="nome_marca">Digite o nome da Marca:</label>
+                    <input type="text" id="nome_marca" name="nome_marca" placeholder="Digite o nome da marca" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-lg btn-indigo">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock 'body' %}

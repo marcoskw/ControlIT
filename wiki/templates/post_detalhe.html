@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+    <!-- Estilos adicionais para a página do post -->
+    <style>
+        .post-header {
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .post-content img {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .post-meta {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .post-tags {
+            margin-top: 10px;
+        }
+
+        .post-tags .badge {
+            margin-right: 5px;
+            font-size: 0.85rem;
+        }
+    </style>
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+    
+<div class="container my-5">
+    <!-- Cabeçalho do post -->
+    <header class="post-header text-center">
+        <h2 class="display-4">{{ post.titulo_post }}</h2>
+        <p>
+            <small>
+                Publicado por <strong>{{ post.autor_post }}</strong> em {{ post.data_post }} |
+                Categoria: <strong>{{ post.categoria_post }}</strong>
+            </small>
+        </p>
+
+        <span class="post-tags">Tags: {{ post.tags }}</span>
+
+    </header>
+
+    <!-- Conteúdo principal do post -->
+    <article class="row justify-content-center">
+        <div class="col-lg-10 post-content">
+            {% if post.imagem_post %}
+                <figure class="mb-4 text-center">
+                    <img class="img-fluid" src="{{ post.imagem_post.url }}" alt="Imagem de {{ post.titulo_post }}">
+                </figure>
+            {% endif %}
+            <div class="content">
+                {{ post.conteudo_post|safe }}
+            </div>
+        </div>
+    </article>
+</div>
+{% endblock 'body' %}
