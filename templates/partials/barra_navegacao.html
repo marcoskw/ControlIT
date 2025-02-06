@@ -26,12 +26,16 @@
       <!-- MENU EMPRESA -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Empresa
+          Cadastros
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
           <a class="dropdown-item" href="{% url 'listar_empresas' %}">Empresa</a>
           <a class="dropdown-item" href="{% url 'listar_setores' %}">Setor</a>       
           <a class="dropdown-item" href="{% url "listar_operadores" %}">Operadores</a>
+          <div class="dropdown-divider"></div>     
+          <a class="dropdown-item" href="{% url 'listar_marcas' %}">Marca</a>
+          <a class="dropdown-item" href="{% url 'listar_softwares' %}">Software</a>
+          <a class="dropdown-item" href="{% url 'listar_sistemas_operacionais' %}">Sistema Operacional</a>   
       </li>
       <!-- MENU CONTATOS -->
       <li class="nav-item">
@@ -41,17 +45,6 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'listar_computadores' %}">Computadores</a>
       </li>          
-      <!-- MENU EQUIPAMENTOS -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Cadastros de Equipamentos
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
-          <a class="dropdown-item" href="{% url 'listar_marcas' %}">Marca</a>
-          <a class="dropdown-item" href="{% url 'listar_softwares' %}">Software</a>
-          <a class="dropdown-item" href="{% url 'listar_sistemas_operacionais' %}">Sistema Operacional</a>
-        </div>
-      </li>
       <!-- MENU OCORRÊNCIAS -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,8 +52,11 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
           <a class="dropdown-item" href="{% url 'ocorrencias_operadores' %}">Operadores</a>
+          <a class="dropdown-item" href="{% url 'listar_ocorrencias_operadores' %}">Lista Oc. Operadores</a>          
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'ocorrencias_equipamentos' %}">Equipamentos</a>
+          <a class="dropdown-item" href="{% url 'listar_ocorrencias_equipamentos' %}">Lista Oc. Equipamentos</a>          
+
         </div>
       </li>
       <!-- MENU WIKI -->
