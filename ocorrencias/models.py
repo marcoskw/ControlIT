@@ -16,7 +16,6 @@ class OcorrenciaOperador(models.Model):
     operador = models.ForeignKey(Operador, on_delete=models.DO_NOTHING, blank=True)
     observacoes = models.TextField(blank=True)
 
-    
 class OcorrenciaComputador(models.Model):
     tipo_ocorrencia_choices = (
         ('1', 'INATIVAR COMPUTADOR'),               

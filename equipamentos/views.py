@@ -17,6 +17,42 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
+# TIPO EQUIPAMENTO
+def cadastrar_tipo_equipamento(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    if request.method == "GET":
+        return render(request, 'cadastrar_tipo_equipamento.html')
+
+    elif request.method == "POST":
+        nome_tipo_equipamento = request.POST.get('nome_tipo_equipamento')
+
+        try:
+            tipo_equipamento = TipoEquipamento(nome_tipo_equipamento=nome_tipo_equipamento)
+
+            tipo_equipamento.save()
+
+        except:
+            messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
+            return redirect('/equipamentos/cadastrar_tipo_equipamento')
+
+        messages.add_message(request, constants.SUCCESS, 'Tipo de equipamento criado com sucesso')
+        return redirect('/equipamentos/cadastrar_tipo_equipamento')
+
+def listar_tipos_equipamentos(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    if request.method == "GET":
+        tipos_equipamentos = TipoEquipamento.objects.annotate(quantidade=Count('nome_tipo_equipamento')).order_by('id')
+        
+        context = {
+            'tipos_equipamentos': tipos_equipamentos,
+        }
+
+    return render(request, 'listar_tipos_equipamentos.html', context)
+
 # MARCAS
 def cadastrar_marca(request):
     if not request.user.is_authenticated:
@@ -50,6 +86,7 @@ def listar_marcas(request):
         context = {
             'marcas': marcas,
         }
+        
     return render(request, 'listar_marcas.html', context)
 
 
@@ -272,7 +309,7 @@ def inspecao_computador(request, id):
     
     user = request.user
     data_inspecao = timezone.now().date()
-    
+
     try:
         computador = Computador.objects.get(id=id)
     except Computador.DoesNotExist:

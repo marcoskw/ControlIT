@@ -2,6 +2,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    #tipo equipamento
+    path('cadastrar_tipo_equipamento/', views.cadastrar_tipo_equipamento, name="cadastrar_tipo_equipamento"),
+    path('listar_tipos_equipamentos/', views.listar_tipos_equipamentos, name="listar_tipos_equipamentos"),
+
     # marca
     path('cadastrar_marca/', views.cadastrar_marca, name="cadastrar_marca"),
     path('listar_marcas/', views.listar_marcas, name="listar_marcas"),
