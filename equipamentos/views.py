@@ -45,7 +45,7 @@ def listar_tipos_equipamentos(request):
         return redirect('/login')
 
     if request.method == "GET":
-        tipos_equipamentos = TipoEquipamento.objects.annotate(quantidade=Count('nome_tipo_equipamento')).order_by('id')
+        tipos_equipamentos = TipoEquipamento.objects.annotate(quantidade=Count('equipamento')).order_by('id')
         
         context = {
             'tipos_equipamentos': tipos_equipamentos,
