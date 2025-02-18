@@ -192,7 +192,7 @@ def trocar_computador_operador(request):
         return redirect('/login')
             
     computadores = Computador.objects.all()
-    operadores = Operador.objects.all().order_by('nome_operador')
+    operadores = Operador.objects.filter(status='ATV').order_by('nome_operador')
 
     if request.method == "GET":
         return render(request,'trocar_computador_operador.html', {
